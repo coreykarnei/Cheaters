@@ -52,7 +52,7 @@ void hashTable::addToHash(string fileName, int n, int index, hashTable &table) {
 
 
 int hashTable::hashFunc(string key) {
-    int i = 0;                                                                      
+    int i = 0;
     for (int j = 0; j<key.size(); j++){
         i = i*19 + key[j];
     }

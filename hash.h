@@ -6,16 +6,22 @@ using namespace std;
 
 class hashTable {
 private:
-	hashNode ** table;
+    hashNode** table;
 
 public:
-	hashTable();							// default constructor
+    hashTable()                                                                     //default constructor
 
-	void addNode(int hashVal, int index);	// adds a node to the front of the list specified by hashVal
+    void addNode(int hashVal, int index);                                           //adds a node to the front of the list specified by hashVal
 
-	hashNode * getPointer(int hashVal);		// returns pointer to a specific hash value
+    hashNode* getPointer(int hashVal);                                               //returns pointer to a specific hash value
 
-	void deleteList(int hashVal);			// removes LL for a specific hash index
+    void addToHash(string fileName, int n, int index, hashTable &table);            //goes thru file and hashes all n-word chunks
 
-	void makeEmpty();						// removes LL for all indexes
+    int hashFunc(string key);                                                       //map a key onto an index
+
+    void deleteList(int hashVal);                                                   //removes LL for a specific hash index
+
+    void makeEmpty();                                                               //removes LL for all indexes
+
+
 };

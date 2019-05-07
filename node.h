@@ -13,17 +13,19 @@ private:
 	int fileIndex;
 	hashNode * next;
 
-	int getDir(string dir, vector<string> &files);
-
 public:
 
-	Directory();// default constructor
+							// constructors
+	hashNode();
+	hashNode(int index);
 
-	Directory(string name);	// constructor
+	int getIndex();			// function that returns file index
 
-	string getDirName();
+	int setIndex();			// sets the file index
 
-	vector<string> getFileNames();
+	hashNode * getNext();	// returns the next node
 
-	~Directory();	// destructor
+	hashNode * setNext();	// function that sets the next node
+
+	~hashNode();			// destructor
 };

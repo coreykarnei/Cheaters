@@ -12,7 +12,7 @@ private:
 	string dirName;
 	vector<string> fileNames;
 
-	int openDir(string dir, vector<string> &files);
+	int getDir(string dir, vector<string> &files);
 
 public:
 

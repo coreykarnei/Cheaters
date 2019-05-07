@@ -14,7 +14,7 @@ private:
 		HashNode * next;
 	};
 
-	static const int TABLE_SIZE = 1299721;	// arbitrary table size
+	static const int TABLE_SIZE = 1500000;	// arbitrary table size
 	HashNode ** table;
 	int ** collisions;
 
@@ -24,7 +24,7 @@ private:
 
 public:
 	HashTable(vector<string> files);
-	void hash(string str, int fileIndex);
+	void hash(string str);
 	void getCollisions(int num, vector<string> files);
 
 	~HashTable();

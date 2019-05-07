@@ -4,13 +4,14 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
-class Directory {
+class hashNode {
 private:
-	string dirName;
-	vector<string> fileNames;
+	int fileIndex;
+	hashNode * next;
 
 	int getDir(string dir, vector<string> &files);
 

@@ -1,8 +1,8 @@
-final: plagiarismCatcher.o dir.o hash.o
-	g++ -std=c++0x -o plagiarismCatcher  plagiarismCatcher.o dir.o hash.o
-driver: plagiarismCatcher.cpp dir.h
+final: plagiarismCatcher.o node.o hash.o
+	g++ -std=c++0x -o plagiarismCatcher  plagiarismCatcher.o node.o hash.o
+driver: plagiarismCatcher.cpp node.h
 	g++ -std=c++0x -c plagiarismCatcher.cpp
-dir.o: dir.cpp dir.h
-	g++ -std=c++0x -c dir.cpp
+node.o: node.cpp node.h
+	g++ -std=c++0x -c node.cpp
 hash.o: hash.cpp hash.h
 	g++ -std=c++0x -c hash.cpp

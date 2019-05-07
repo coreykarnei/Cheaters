@@ -8,5 +8,21 @@
 using namespace std;
 
 class Directory {
+private:
+	string dirName;
+	vector<string> fileNames;
 
+	int openDir(string dir, vector<string> &files);
+
+public:
+
+	Directory();// default constructor
+
+	Directory(string name);	// constructor
+
+	string getDirName();
+
+	vector<string> getFileNames();
+
+	~Directory();	// destructor
 };

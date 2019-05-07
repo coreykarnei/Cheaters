@@ -1,3 +1,6 @@
+#ifndef NODE_H
+#define NODE_H
+
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
@@ -26,6 +29,5 @@ public:
 	hashNode * getNext();				// returns the next node
 
 	void setNext(hashNode * nextToSet);	// function that sets the next node
-
-	~hashNode();						// destructor
 };
+#endif	// ifndef NODE_H

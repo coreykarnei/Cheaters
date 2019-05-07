@@ -5,38 +5,106 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "node.h"
+#include "hash.h"
 
 using namespace std;
 
-void getWords(string fileName, vector<string> &words);
-
 int getDir(string dir, vector<string> &files);
 
+const int TABLESIZE = 1000000;
 
-int main(){ }
 
-/**
-   getWords
-
-   Function that gets each word in the file named fileName,
-   and stores them in the vector supplied as argument 2 ("words").
-
- **/
-void getWords(string fileName, vector<string> &words)
+int main(int argc, char * argv[])
 {
-	ifstream fileStream;
+	if (argc != 4) {
+		cout << "Incorrect amount of arguments." << endl;
+		return (-1);
+	}
+	string dir    = argv[1];
+	int n         = atoi(argv[2]);
+	int threshold = atoi(argv[3]);
 
-	fileStream.open(fileName.c_str());
-
-	if (!fileStream.is_open()) {
-		cout << "Cannot open file." << endl;
+	if (n < 1 || threshold < 1) {
+		cout << "Incorrect arguments." << endl;
+		return (-1);
 	}
 
-	string word;
-	while (fileStream >> word) {
-		words.push_back(word);
+	vector<string> files = vector<string>();
+	int test = getDir(dir, files);
+	if (test != 0) {
+		cout << "Couldn't find files." << endl;
+		return (-1);
 	}
-}
+	for (int i = 0; i < 10; i++) {
+		string output = files[i];
+		cout << output << endl;
+	}
+
+	hashTable dataTable;
+
+	for (int i = 0; i < files.size(); i++) {
+		if (files[i] != "." && files[i] != "..") {
+			string fullName = dir + "/" + files[i];
+			dataTable.addToHash(fullName, n, i, dataTable);
+		}
+	}
+
+	int ** collisionTable = new int *[files.size()];
+	for (int i = 0; i < files.size(); i++) {
+		collisionTable[i] = new int[files.size()];
+	}
+
+	for (int i = 0; i < files.size(); i++) {
+		for (int j = 0; j < files.size(); j++) {
+			collisionTable[i][j] = 0;
+		}
+	}
+
+	for (int i = 0; i < TABLESIZE; i++) {
+		hashNode * temp1;
+		temp1 = dataTable.getPointer(i);
+
+		while (temp1 != NULL) {
+			hashNode * temp2;
+			temp2 = temp1->getNext();
+			while (temp2 != NULL) {
+				collisionTable[temp1->getIndex()][temp2->getIndex()] += 1;
+				temp2 = temp2->getNext();
+			}
+			temp1 = temp1->getNext();
+		}
+	}
+	int max    = threshold;
+	int maxRow = 0;
+	int maxCol = 0;
+
+	while (max >= threshold) {
+		max = 0;
+		for (int i = 0; i < files.size(); i++) {
+			for (int j = 0; j < files.size(); j++) {
+				int collisions = collisionTable[i][j];
+				if (collisions > max) {
+					maxRow = i;
+					maxCol = j;
+					max    = collisions;
+				}
+			}
+		}
+		if (max >= threshold) {
+			cout << max << " collisions: \"" << files[maxRow] << "\" and \"" << files[maxCol] << "\"" << endl;
+			collisionTable[maxRow][maxCol] = 0;
+		}
+	}
+	dataTable.makeEmpty();
+
+	for (int i = 0; i < files.size(); i++) {
+		delete(collisionTable[i]);
+	}
+	delete(collisionTable);
+
+	return (0);
+}	// main
 
 /**
    getDir

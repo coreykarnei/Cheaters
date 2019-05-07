@@ -1,5 +1,6 @@
 #include "hash.h"
 #include <stdlib.h>
+#include <vector>
 
 using namespace std;
 
@@ -34,6 +35,29 @@ hashNode* hashTable::getPointer(int hashVal) {
     return table[hashVal];                                      //return pointer to hashVal
 }
 
+
+
+void hashTable::addToHash(string fileName, int n, int index, hashTable &table) {
+    vector <string> words;
+    getWords(fileName, words);
+
+    for(int i =0; i<(words.size()-n); i++){
+            string strin;
+            for (int j = 0; j<n; j++){
+                strin += words[i+j];
+            }
+        table.addNode(hashFunc(strin), index);
+    }
+}
+
+
+int hashTable::hashFunc(string key) {
+    int i = 0;                                                                      
+    for (int j = 0; j<key.size(); j++){
+        i = i*19 + key[j];
+    }
+    return abs(i % SIZE);
+}
 
 
 void hashTable::deleteList(int hashVal) {

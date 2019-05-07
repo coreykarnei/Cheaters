@@ -1,43 +1,55 @@
 #include "hash.h"
-#include <cmath>
-#include <cstdlib>
-#include <algorithm>
-#include <iostream>
-#include <vector>
-#include <string>
+#include <stdlib.h>
 
 using namespace std;
 
-HashTable::HashTable()	// default constructor
-{
-	for (int i = 0; i < TABLE_SIZE; i++) {
-		HashTable[i] = NULL;
-	}
+const int SIZE = 1000000;
+
+
+hashTable::hashTable() {
+    table = new hashNode*[SIZE];
+    for(int i =0; i<SIZE; i++){
+        table[i] = NULL;
+    }
 }
 
-unsigned long long HashTable::hashFunc(string str, int tableSize)
-{
-	unsigned long long index = 0
-	  for (int i = 0; i < str.size(); i++) {
-		index += static_cast<int>(str[i]) % 7 * pow(2, (i % 63));
-	}
-	return index % tableSize;
+
+void hashTable::addNode(int hashVal, int index) {
+    hashNode* cur = table[hashVal];
+    while(cur != NULL){
+        if(cur->getFileIndex == index){
+            return;
+        }
+        cur = cur->getNext;
+    }
+    hashNode* insert = new hashNode(index);
+    insert->setNext(table[hashVal]);
+    table[hashVal] = insert;
 }
 
-int HashTable::hash(string str)
-{
-	unsigned long long index = hashFunc(str, TABLE_SIZE);
-	HashNode * ptr = table[index];
 
-	if (ptr != NULL) {
-		HashNode * temp = new HashNode;
-		temp->fileIndex = fileIndex;
-		temp->next      = ptr;
-		table[index]    = temp;
-	} else {
-		ptr = new HashNode;
-		ptr->fileIndex = fileIndex;
-		ptr->next      = NULL;
-		table[index]   = ptr;
-	}
+
+
+hashNode* hashTable::getPointer(int hashVal) {
+    return table[hashVal];
 }
+
+
+
+void hashTable::deleteList(int hashVal) {
+    hashNode* cur = table[hashVal];
+    while(cur != NULL){
+        hashNode *del = cur;
+        cur = cur->getNext();
+        delete (del);
+    }
+}
+
+void hashTable::makeEmpty() {
+    int i = 0;
+    while(i<SIZE){
+        deleteList(i);
+        i++;
+    }
+}
+

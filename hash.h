@@ -1,31 +1,22 @@
-#include <sys/types.h>
-#include <dirent.h>
-#include <errno.h>
+#include <stdlib.h>
+#include "node.h"
 #include <vector>
-#include <string>
-#include <iostream>
 
 using namespace std;
 
-class HashTable {
+class hashTable {
 private:
-	struct HashNode {
-		int        fileIndex;
-		HashNode * next;
-	};
-
-	static const int TABLE_SIZE = 1500000;	// arbitrary table size
-	HashNode ** table;
-	int ** collisions;
-
-	int numFiles;
-
-	unsigned long hashFunc(string str, int tableSize);
+    hashNode** table;
 
 public:
-	HashTable(vector<string> files);
-	void hash(string str);
-	void getCollisions(int num, vector<string> files);
+    hashTable()                              //default constructor
 
-	~HashTable();
+    void addNode(int hashVal, int index);   //adds a node to the front of the list specified by hashVal
+
+    hashNode* getPointer(int hashVal);      //returns pointer to a specific hash value
+
+    void deleteList(int hashVal);           //removes LL for a specific hash index
+
+    void makeEmpty();                       //removes LL for all indexes
+
 };

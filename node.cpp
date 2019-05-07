@@ -1,47 +1,34 @@
-#include "dir.h"
+#include "node.h"
+#include <stdlib.h>
 
-using namespace std;
-
-
-int Directory::getDir(string dir, vector<string> &files)
+hashNode::hashNode()
 {
-	DIR * dirPtr;
-	struct dirent * dirStr;
-
-	if ((dirPtr = opendir(dir.c_str())) == NULL) {
-		cout << "Error Number " << errno << " when opening " << dir << endl;
-		return errno;
-	}
-
-	while ((dirStr = readdir(dirPtr)) != NULL) {
-		files.push_back(string(dirStr->d_name));
-	}
-	closedir(dirPtr);
-	return (0);
+	next  = NULL;
+	index = 0;
 }
 
-Directory::Directory()	// defualt constructor
+hashNode::hashNode(int idx)
 {
-	dirName   = "New Dir";
-	fileNames = vector<string>();
+	next  = NULL;
+	index = idx;
 }
 
-Directory::Directory(string name)
+int hashNode::getIndex()
 {
-	dirName   = name;
-	fileNames = vector<string>();
-	getDir(dirName, fileNames);
+	return index;
 }
 
-string Directory::getDirName()
+hashNode * hashNode::getNext()
 {
-	return dirName;
+	return next;
 }
 
-vector<string> Directory::getFileNames()
+void hashNode:: setNext(hashNode * nextToSet)
 {
-	return fileNames;
+	next = nextToSet;
 }
 
-Directory::~Directory()	// destructor
-{ }
+void hashNode::setIndex(int idx)
+{
+	index = idx;
+}

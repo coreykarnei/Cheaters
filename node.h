@@ -10,7 +10,7 @@ using namespace std;
 
 class hashNode {
 private:
-	int fileIndex;
+	int index;
 	hashNode * next;
 
 public:

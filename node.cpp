@@ -23,7 +23,7 @@ hashNode * hashNode::getNext()
 	return next;
 }
 
-void hashNode:: setNext(hashNode * nextToSet)
+void hashNode::setNext(hashNode * nextToSet)
 {
 	next = nextToSet;
 }

@@ -38,7 +38,7 @@ int main(int argc, char * argv[])
 	}
 	for (int i = 0; i < 10; i++) {
 		string output = files[i];
-		cout << output << endl;
+		//cout << output << endl;
 	}
 
 	hashTable dataTable;
@@ -92,7 +92,7 @@ int main(int argc, char * argv[])
 			}
 		}
 		if (max >= threshold) {
-			cout << max << " collisions: \"" << files[maxRow] << "\" and \"" << files[maxCol] << "\"" << endl;
+			cout << max << " collisions: \"" << files[maxRow] << "\", \"" << files[maxCol] << "\"" << endl;
 			collisionTable[maxRow][maxCol] = 0;
 		}
 	}
